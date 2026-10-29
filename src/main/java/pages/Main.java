@@ -1,4 +1,4 @@
-package org.example;
+package pages;
 
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
@@ -25,13 +25,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final Map<String, Object> chromePrefs = new HashMap<>();
-        chromePrefs.put("credentials_enable_service", false);
-        chromePrefs.put("profile.password_manager_enabled", false);
-        chromePrefs.put("profile.password_manager_leak_detection", false);
-
-        final ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setExperimentalOption("prefs", chromePrefs);
+//        final Map<String, Object> chromePrefs = new HashMap<>();
+//        chromePrefs.put("credentials_enable_service", false);
+//        chromePrefs.put("profile.password_manager_enabled", false);
+//        chromePrefs.put("profile.password_manager_leak_detection", false);
+//
+       final ChromeOptions chromeOptions = new ChromeOptions();
+//        chromeOptions.setExperimentalOption("prefs", chromePrefs);
 
         WebDriver chromeDriver = new ChromeDriver(chromeOptions);
 

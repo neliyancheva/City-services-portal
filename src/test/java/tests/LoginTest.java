@@ -15,8 +15,7 @@ public class LoginTest extends BaseTest {
     public void verifyLoginPage(){
 
         LoginPage loginPage = new LoginPage(driver);
-
-        loginPage
+        
 
 
     }
