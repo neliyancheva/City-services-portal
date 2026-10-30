@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class BaseTest {
     protected static final String BASE_URL = "http://localhost:5173";
@@ -17,9 +19,17 @@ public abstract class BaseTest {
 
     @BeforeEach
     void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
-        driver = new ChromeDriver();
+        final Map<String, Object> chromePrefs = new HashMap<>();
+        chromePrefs.put("credentials_enable_service", false);
+        chromePrefs.put("profile.password_manager_enabled", false);
+        chromePrefs.put("profile.password_manager_leak_detection", false);
+
+        final ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("prefs", chromePrefs);
+//        chromeOptions.addArguments("--headless=new");
+        driver = new ChromeDriver(chromeOptions);
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 

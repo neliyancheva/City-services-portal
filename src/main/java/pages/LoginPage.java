@@ -20,19 +20,46 @@ public class LoginPage {
         driver.get("http://localhost:5173/login");
     }
 
-    public HomePage loginWithDefaultCredentialsCitizen(){
-    driver.findElement(CITIZEN_BUTTON).click();
-    driver.findElement(LOGIN_BUTTON).click();
-    return new HomePage(driver);
+    public String getTitle() {
+        return driver.getTitle();
+    }
+
+    public String loginButtonGetText() {
+        return driver.findElement(LOGIN_BUTTON).getText();
+    }
+
+    public HomePage loginWithDefaultCredentialsCitizen() {
+        driver.findElement(CITIZEN_BUTTON).click();
+        driver.findElement(LOGIN_BUTTON).click();
+        return new HomePage(driver);
+    }
+
+    public HomePage loginWithDefaultCredentialsClerk() {
+        driver.findElement(CLERK_BUTTON).click();
+        driver.findElement(LOGIN_BUTTON).click();
+        return new HomePage(driver);
+    }
+
+    public HomePage loginWithDefaultCredentialsSupervisor() {
+        driver.findElement(SUPERVISOR_BUTTON).click();
+        driver.findElement(LOGIN_BUTTON).click();
+        return new HomePage(driver);
+    }
+
+    public HomePage loginWithDefaultCredentialsFieldAgent() {
+        driver.findElement(FIELD_AGENT_BUTTON).click();
+        driver.findElement(LOGIN_BUTTON).click();
+        return new HomePage(driver);
+    }
+
+        public HomePage loginWithDefaultCredentialsAdministrator () {
+            driver.findElement(ADMINISTRATOR_BUTTON).click();
+            driver.findElement(LOGIN_BUTTON).click();
+            return new HomePage(driver);
+        }
     }
 
 
-
-
-
-
-
-}
 
 
 
