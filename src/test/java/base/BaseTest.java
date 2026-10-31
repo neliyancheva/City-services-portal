@@ -27,7 +27,7 @@ public abstract class BaseTest {
 
         final ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
-        chromeOptions.addArguments("--headless=new");
+//        chromeOptions.addArguments("--headless=new");
         driver = new ChromeDriver(chromeOptions);
         driver.manage().window().setSize(new Dimension(1920, 1080));
 

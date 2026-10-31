@@ -12,6 +12,7 @@ public class HomePage {
     private static final By USER_ROLE_SUPERVISOR = By.xpath("//*[@data-testid='cs-user-menu']//span[text()='SUPERVISOR']");
     private static final By USER_ROLE_FIELD_AGENT = By.xpath("//*[@data-testid='cs-user-menu']//span[text()='FIELD_AGENT']");
     private static final By USER_ROLE_ADMINISTRATOR = By.xpath("//*[@data-testid='cs-user-menu']//span[text()='ADMIN']");
+    private static final By NEW_REQUEST_BUTTON = By.xpath("//*[@data-testid='cs-app-header']//*[@data-testid='cs-nav-new-request']");
 
     private final WebDriver driver;
     private final WebDriverWait wait;
@@ -28,7 +29,6 @@ public class HomePage {
 
     public String getTextCitizen() {
         return driver.findElement(USER_ROLE_CITIZEN).getText();
-
     }
 
     public String getTextClerk() {
@@ -38,16 +38,18 @@ public class HomePage {
 
     public String getTextSupervisor() {
         return driver.findElement(USER_ROLE_SUPERVISOR).getText();
-
     }
 
     public String getTextFieldAgent() {
         return driver.findElement(USER_ROLE_FIELD_AGENT).getText();
-
     }
 
     public String getTextAdministrator() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(USER_ROLE_ADMINISTRATOR)).getText();
+    }
 
+    public NewRequestPage clickOnNewRequestButton(){
+        driver.findElement(NEW_REQUEST_BUTTON).click();
+        return new NewRequestPage(driver, wait);
     }
 }
