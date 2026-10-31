@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
 
@@ -14,9 +15,11 @@ public class LoginPage {
 
 
     private final WebDriver driver;
+    private final WebDriverWait wait;
 
-    public LoginPage(WebDriver driver) {
+    public LoginPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
+        this.wait = wait;
         driver.get("http://localhost:5173/login");
     }
 
@@ -31,33 +34,33 @@ public class LoginPage {
     public HomePage loginWithDefaultCredentialsCitizen() {
         driver.findElement(CITIZEN_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver);
+        return new HomePage(driver, wait);
     }
 
     public HomePage loginWithDefaultCredentialsClerk() {
         driver.findElement(CLERK_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver);
+        return new HomePage(driver, wait);
     }
 
     public HomePage loginWithDefaultCredentialsSupervisor() {
         driver.findElement(SUPERVISOR_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver);
+        return new HomePage(driver, wait);
     }
 
     public HomePage loginWithDefaultCredentialsFieldAgent() {
         driver.findElement(FIELD_AGENT_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver);
+        return new HomePage(driver, wait);
     }
 
-        public HomePage loginWithDefaultCredentialsAdministrator () {
-            driver.findElement(ADMINISTRATOR_BUTTON).click();
-            driver.findElement(LOGIN_BUTTON).click();
-            return new HomePage(driver);
-        }
+    public HomePage loginWithDefaultCredentialsAdministrator() {
+        driver.findElement(ADMINISTRATOR_BUTTON).click();
+        driver.findElement(LOGIN_BUTTON).click();
+        return new HomePage(driver, wait);
     }
+}
 
 
 

@@ -2,6 +2,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage {
     private static final By USER_MENU_BUTTON = By.xpath("//*[@data-testid='cs-user-menu-button']");
@@ -12,9 +14,11 @@ public class HomePage {
     private static final By USER_ROLE_ADMINISTRATOR = By.xpath("//*[@data-testid='cs-user-menu']//span[text()='ADMIN']");
 
     private final WebDriver driver;
+    private final WebDriverWait wait;
 
-    public HomePage(WebDriver driver) {
+    public HomePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
+        this.wait = wait;
     }
 
     public HomePage clickOnUserIcon() {
@@ -22,28 +26,28 @@ public class HomePage {
         return this;
     }
 
-    public String getTextCitizen(){
-      return driver.findElement(USER_ROLE_CITIZEN).getText();
+    public String getTextCitizen() {
+        return driver.findElement(USER_ROLE_CITIZEN).getText();
 
     }
 
-    public String getTextClerk(){
-        return driver.findElement( USER_ROLE_CLERK).getText();
+    public String getTextClerk() {
+        return driver.findElement(USER_ROLE_CLERK).getText();
 
     }
 
-    public String getTextSupervisor(){
+    public String getTextSupervisor() {
         return driver.findElement(USER_ROLE_SUPERVISOR).getText();
 
     }
 
-    public String getTextFieldAgent(){
+    public String getTextFieldAgent() {
         return driver.findElement(USER_ROLE_FIELD_AGENT).getText();
 
     }
 
-    public String getTextAdministrator(){
-        return driver.findElement(USER_ROLE_ADMINISTRATOR).getText();
+    public String getTextAdministrator() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(USER_ROLE_ADMINISTRATOR)).getText();
 
     }
 }

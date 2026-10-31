@@ -21,7 +21,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void verifyLoginPage() {
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage(driver, wait);
 
 
         String actualTitle = loginPage.getTitle();
@@ -38,7 +38,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void checkCitizenRole() {
 
-        String actualUserRole = new LoginPage(driver)
+        String actualUserRole = new LoginPage(driver, wait)
                 .loginWithDefaultCredentialsCitizen()
                 .clickOnUserIcon()
                 .getTextCitizen();
@@ -49,7 +49,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void checkClerkRole() {
 
-        String actualUserRole = new LoginPage(driver)
+        String actualUserRole = new LoginPage(driver, wait)
                 .loginWithDefaultCredentialsClerk()
                 .clickOnUserIcon()
                 .getTextClerk();
@@ -60,7 +60,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void checkSupervisorRole() {
 
-        String actualUserRole = new LoginPage(driver)
+        String actualUserRole = new LoginPage(driver, wait)
                 .loginWithDefaultCredentialsSupervisor()
                 .clickOnUserIcon()
                 .getTextSupervisor();
@@ -71,7 +71,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void checkFieldAgentRole() {
 
-        String actualUserRole = new LoginPage(driver)
+        String actualUserRole = new LoginPage(driver, wait)
                 .loginWithDefaultCredentialsFieldAgent()
                 .clickOnUserIcon()
                 .getTextFieldAgent();
@@ -79,15 +79,15 @@ public class LoginTest extends BaseTest {
         Assertions.assertEquals(FIELD_AGENT, actualUserRole, ERROR_MESSAGE_USER_ROLE);
     }
 
-//    @Test
-//    public void checkAdministrator() {
-//
-//        String actualUserRole = new LoginPage(driver)
-//                .loginWithDefaultCredentialsAdministrator()
-//                .clickOnUserIcon()
-//                .getTextAdministrator();
-//
-//        Assertions.assertEquals(ADMINISTRATOR, actualUserRole, ERROR_MESSAGE_USER_ROLE);
-//    }
+    @Test
+    public void checkAdministrator() {
 
+        String actualUserRole = new LoginPage(driver, wait)
+                .loginWithDefaultCredentialsAdministrator()
+                .clickOnUserIcon()
+                .getTextAdministrator();
+
+        Assertions.assertEquals(ADMINISTRATOR, actualUserRole, ERROR_MESSAGE_USER_ROLE);
+
+    }
 }
