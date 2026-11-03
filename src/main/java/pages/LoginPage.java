@@ -12,6 +12,8 @@ public class LoginPage {
     private static final By FIELD_AGENT_BUTTON = By.xpath("//button[@data-testid='cs-prefill-field-agent']");
     private static final By ADMINISTRATOR_BUTTON = By.xpath("//button[@data-testid='cs-prefill-administrator']");
     private static final By LOGIN_BUTTON = By.xpath("//*[@data-testid='cs-login-submit']");
+    private static final By EMAIL_FIELD = By.xpath("//input[@type='email']");
+    private static final By PASSWORD_FIELD = By.xpath("//input[@type='password']");
 
 
     private final WebDriver driver;
@@ -57,6 +59,13 @@ public class LoginPage {
 
     public HomePage loginWithDefaultCredentialsAdministrator() {
         driver.findElement(ADMINISTRATOR_BUTTON).click();
+        driver.findElement(LOGIN_BUTTON).click();
+        return new HomePage(driver, wait);
+    }
+
+    public HomePage loginWithCitizenRole(){
+        driver.findElement(EMAIL_FIELD).sendKeys("john@example.com");
+        driver.findElement(PASSWORD_FIELD).sendKeys("password123");
         driver.findElement(LOGIN_BUTTON).click();
         return new HomePage(driver, wait);
     }

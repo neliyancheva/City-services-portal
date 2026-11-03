@@ -23,14 +23,6 @@ public class NewRequestPage extends Header {
     private static final By CHECKBOX_FIELD = By.xpath("//*[text()='I agree to the terms and conditions']");
     private static final By SUBMIT_REQUEST_BUTTON = By.xpath("//button[@data-testid='cs-new-request-wizard-submit']");
 
-
-    private static final String STREET_ADDRESS_TEXT = "Slivnitsa 13";
-    private static final String CITY_TEXT = "Varna";
-    private static final String POSTAL_CODE_TEXT = "9000";
-    private static final String LOCATION_DESCRIPTION_TEXT = "Traffic light above the road near Varna mall";
-    private static final String EMAIL_TEXT = "nelly.yanch@gmail.com";
-    private static final String PHONE_TEXT = "0885796059";
-
     public NewRequestPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
     }
@@ -40,23 +32,24 @@ public class NewRequestPage extends Header {
         input(DESCRIPTION_FIELD, description);
         click(CATEGORY_BUTTON);
         click(ROADS_AND_INFRASTRUCTURE_DROPDOWN);
+        wait.until(ExpectedConditions.elementToBeClickable(HIGH_PRIORITY_BUTTON)).click();
         click(HIGH_PRIORITY_BUTTON);
         click(NEXT_BUTTON);
         return this;
     }
 
-    public NewRequestPage fillInLocationDetails() {
-        input(STREET_ADDRESS_FIELD, STREET_ADDRESS_TEXT);
-        input(CITY_FIELD, CITY_TEXT);
-        input(POSTAL_CODE_FIELD, POSTAL_CODE_TEXT);
-        input(LOCATION_DESCRIPTION_FIELD, LOCATION_DESCRIPTION_TEXT);
+    public NewRequestPage fillInLocationDetails(String streetAddress, String city, String postalCode, String locationDescription) {
+        input(STREET_ADDRESS_FIELD, streetAddress);
+        input(CITY_FIELD, city);
+        input(POSTAL_CODE_FIELD, postalCode);
+        input(LOCATION_DESCRIPTION_FIELD, locationDescription);
         click(NEXT_BUTTON);
         return this;
     }
 
-    public NewRequestPage fillInContactInformation() {
-        input(EMAIL_FIELD, EMAIL_TEXT);
-        input(PHONE_FIELD, PHONE_TEXT);
+    public NewRequestPage fillInContactInformation(String email, String phone) {
+        input(EMAIL_FIELD, email);
+        input(PHONE_FIELD, phone);
         click(NEXT_BUTTON);
         return this;
     }
@@ -80,4 +73,5 @@ public class NewRequestPage extends Header {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).click();
     }
 }
+
 
