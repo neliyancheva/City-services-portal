@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pages.LoginPage;
 
-
 public class LoginTest extends BaseTest {
     private static final String EXPECTED_TITLE = "City Services Portal";
     private static final String ERROR_MESSAGE_TITLE = "The title is incorrect";

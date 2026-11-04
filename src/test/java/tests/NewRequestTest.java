@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pages.CitizenRequestsPage;
 import pages.LoginPage;
-import pages.NewRequestPage;
 
 public class NewRequestTest extends BaseTest {
 
@@ -53,5 +52,4 @@ public class NewRequestTest extends BaseTest {
                 () -> Assertions.assertEquals(EXPECTED_STATUS, actualStatus, ERROR_MESSAGE_STATUS)
         );
     }
-
 }
