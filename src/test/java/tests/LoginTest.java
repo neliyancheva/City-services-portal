@@ -3,6 +3,8 @@ package tests;
 import base.BaseTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import pages.LoginPage;
 
 public class LoginTest extends BaseTest {
@@ -10,11 +12,6 @@ public class LoginTest extends BaseTest {
     private static final String ERROR_MESSAGE_TITLE = "The title is incorrect";
     private static final String EXPECTED_TEXT_LOGIN_BUTTON = "Login";
     private static final String ERROR_MESSAGE_LOGIN_BUTTON = "The text of the button is incorrect";
-    private static final String CITIZEN = "CITIZEN";
-    private static final String CLERK = "CLERK";
-    private static final String SUPERVISOR = "SUPERVISOR";
-    private static final String FIELD_AGENT = "FIELD_AGENT";
-    private static final String ADMINISTRATOR = "ADMIN";
     private static final String ERROR_MESSAGE_USER_ROLE = "The role is incorrect";
 
     @Test
@@ -34,59 +31,30 @@ public class LoginTest extends BaseTest {
                 (EXPECTED_TEXT_LOGIN_BUTTON, actualTextLoginButton, ERROR_MESSAGE_LOGIN_BUTTON);
     }
 
-    @Test
-    public void checkCitizenRole() {
-
+    @ParameterizedTest
+    @CsvSource({"john@example.com, password123, CITIZEN",
+            "mary.clerk@city.gov, password123, CLERK",
+            "supervisor@city.gov, password123, SUPERVISOR",
+            "field.agent@city.gov, password123, FIELD_AGENT",
+            "admin@city.gov, password123, ADMIN"})
+    public void loginWithEmailAndPassword_getExpectedRole(String email, String password, String expectedRole) {
         String actualUserRole = new LoginPage(driver, wait)
-                .loginWithDefaultCredentialsCitizen()
+                .loginWithEmailAndPassword(email, password)
                 .clickOnUserIcon()
-                .getTextCitizen();
+                .getCurrentUserRole();
 
-        Assertions.assertEquals(CITIZEN, actualUserRole, ERROR_MESSAGE_USER_ROLE);
+        Assertions.assertEquals(expectedRole, actualUserRole, ERROR_MESSAGE_USER_ROLE);
     }
 
-    @Test
-    public void checkClerkRole() {
+    @ParameterizedTest
+    @CsvSource({"john@example.com, password12",
+            "unknown@city.gov, password123"})
+//  Empty email scenario cannot be tested due to pop-up error message which does not exist in DOM
+    public void loginWithIncorrectCredentials_errorMessageIsDisplayed(String email, String password) {
+        boolean isErrorMessageDisplayed = new LoginPage(driver, wait)
+                .loginWithIncorrectEmailAndPassword(email, password)
+                .isErrorMessageDisplayed();
 
-        String actualUserRole = new LoginPage(driver, wait)
-                .loginWithDefaultCredentialsClerk()
-                .clickOnUserIcon()
-                .getTextClerk();
-
-        Assertions.assertEquals(CLERK, actualUserRole, ERROR_MESSAGE_USER_ROLE);
-    }
-
-    @Test
-    public void checkSupervisorRole() {
-
-        String actualUserRole = new LoginPage(driver, wait)
-                .loginWithDefaultCredentialsSupervisor()
-                .clickOnUserIcon()
-                .getTextSupervisor();
-
-        Assertions.assertEquals(SUPERVISOR, actualUserRole, ERROR_MESSAGE_USER_ROLE);
-    }
-
-    @Test
-    public void checkFieldAgentRole() {
-
-        String actualUserRole = new LoginPage(driver, wait)
-                .loginWithDefaultCredentialsFieldAgent()
-                .clickOnUserIcon()
-                .getTextFieldAgent();
-
-        Assertions.assertEquals(FIELD_AGENT, actualUserRole, ERROR_MESSAGE_USER_ROLE);
-    }
-
-    @Test
-    public void checkAdministrator() {
-
-        String actualUserRole = new LoginPage(driver, wait)
-                .loginWithDefaultCredentialsAdministrator()
-                .clickOnUserIcon()
-                .getTextAdministrator();
-
-        Assertions.assertEquals(ADMINISTRATOR, actualUserRole, ERROR_MESSAGE_USER_ROLE);
-
+        Assertions.assertTrue(isErrorMessageDisplayed, "Error message is not displayed");
     }
 }

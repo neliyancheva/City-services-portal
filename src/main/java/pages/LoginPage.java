@@ -1,7 +1,9 @@
 package pages;
 
+import components.Header;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
@@ -14,6 +16,7 @@ public class LoginPage {
     private static final By LOGIN_BUTTON = By.xpath("//*[@data-testid='cs-login-submit']");
     private static final By EMAIL_FIELD = By.xpath("//input[@type='email']");
     private static final By PASSWORD_FIELD = By.xpath("//input[@type='password']");
+    private static final By ERROR_MESSAGE_LOGIN = By.xpath("//*[@data-testid='cs-login-error']");
 
 
     private final WebDriver driver;
@@ -33,42 +36,62 @@ public class LoginPage {
         return driver.findElement(LOGIN_BUTTON).getText();
     }
 
-    public HomePage loginWithDefaultCredentialsCitizen() {
+    public Header loginWithDefaultCredentialsCitizen() {
         driver.findElement(CITIZEN_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver, wait);
+        return new Header(driver, wait);
     }
 
-    public HomePage loginWithDefaultCredentialsClerk() {
+    public Header loginWithDefaultCredentialsClerk() {
         driver.findElement(CLERK_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver, wait);
+        return new Header(driver, wait);
     }
 
-    public HomePage loginWithDefaultCredentialsSupervisor() {
+    public Header loginWithDefaultCredentialsSupervisor() {
         driver.findElement(SUPERVISOR_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver, wait);
+        return new Header(driver, wait);
     }
 
-    public HomePage loginWithDefaultCredentialsFieldAgent() {
+    public Header loginWithDefaultCredentialsFieldAgent() {
         driver.findElement(FIELD_AGENT_BUTTON).click();
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver, wait);
+        return new Header(driver, wait);
     }
 
-    public HomePage loginWithDefaultCredentialsAdministrator() {
-        driver.findElement(ADMINISTRATOR_BUTTON).click();
-        driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver, wait);
-    }
-
-    public HomePage loginWithCitizenRole(){
+    public Header loginWithDefaultCredentialsAdministrator() {
         driver.findElement(EMAIL_FIELD).sendKeys("john@example.com");
         driver.findElement(PASSWORD_FIELD).sendKeys("password123");
         driver.findElement(LOGIN_BUTTON).click();
-        return new HomePage(driver, wait);
+        return new Header(driver, wait);
     }
+
+    public Header loginWithCitizenRole(){
+        driver.findElement(EMAIL_FIELD).sendKeys("john@example.com");
+        driver.findElement(PASSWORD_FIELD).sendKeys("password123");
+        driver.findElement(LOGIN_BUTTON).click();
+        return new Header(driver, wait);
+    }
+
+    public Header loginWithEmailAndPassword(String email, String password) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(EMAIL_FIELD)).sendKeys(email);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD_FIELD)).sendKeys(password);
+        driver.findElement(LOGIN_BUTTON).click();
+        return new Header(driver, wait);
+    }
+
+    public LoginPage loginWithIncorrectEmailAndPassword(String email, String password) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(EMAIL_FIELD)).sendKeys(email);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(PASSWORD_FIELD)).sendKeys(password);
+        driver.findElement(LOGIN_BUTTON).click();
+        return this;
+    }
+
+    public boolean isErrorMessageDisplayed(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(ERROR_MESSAGE_LOGIN)).isDisplayed();
+    }
+
 }
 
 
