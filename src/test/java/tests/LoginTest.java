@@ -1,6 +1,7 @@
 package tests;
 
 import base.BaseTest;
+import components.Header;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -38,12 +39,16 @@ public class LoginTest extends BaseTest {
             "field.agent@city.gov, password123, FIELD_AGENT",
             "admin@city.gov, password123, ADMIN"})
     public void loginWithEmailAndPassword_getExpectedRole(String email, String password, String expectedRole) {
-        String actualUserRole = new LoginPage(driver, wait)
+        Header header = new LoginPage(driver, wait)
                 .loginWithEmailAndPassword(email, password)
-                .clickOnUserIcon()
+                .clickOnUserIcon();
+
+        String actualUserRole = header
                 .getCurrentUserRole();
 
         Assertions.assertEquals(expectedRole, actualUserRole, ERROR_MESSAGE_USER_ROLE);
+
+        header.clickOnLogoutButton();
     }
 
     @ParameterizedTest
@@ -56,5 +61,23 @@ public class LoginTest extends BaseTest {
                 .isErrorMessageDisplayed();
 
         Assertions.assertTrue(isErrorMessageDisplayed, "Error message is not displayed");
+    }
+
+    @Test
+    public void login_maskedPasswordField() {
+
+        String passwordFieldType = new LoginPage(driver, wait)
+                .getPasswordFieldType();
+
+        Assertions.assertEquals("password", passwordFieldType, "The password is not masked");
+    }
+
+    @Test
+    public void unsuccessfulLogin_emailRemainsFilledIn() {
+        boolean isEmailPopulated = new LoginPage(driver, wait)
+                .loginWithIncorrectEmailAndPassword("john@example.com", "password")
+                .isEmailFieldFilledIn();
+
+        Assertions.assertTrue(isEmailPopulated, "The email field is empty");
     }
 }

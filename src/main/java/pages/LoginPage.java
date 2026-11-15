@@ -15,7 +15,7 @@ public class LoginPage {
     private static final By ADMINISTRATOR_BUTTON = By.xpath("//button[@data-testid='cs-prefill-administrator']");
     private static final By LOGIN_BUTTON = By.xpath("//*[@data-testid='cs-login-submit']");
     private static final By EMAIL_FIELD = By.xpath("//input[@type='email']");
-    private static final By PASSWORD_FIELD = By.xpath("//input[@type='password']");
+    private static final By PASSWORD_FIELD = By.xpath("//*[@data-testid='cs-login-password']//input");
     private static final By ERROR_MESSAGE_LOGIN = By.xpath("//*[@data-testid='cs-login-error']");
 
 
@@ -92,6 +92,13 @@ public class LoginPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(ERROR_MESSAGE_LOGIN)).isDisplayed();
     }
 
+   public String getPasswordFieldType(){
+        return driver.findElement(PASSWORD_FIELD).getAttribute("type");
+   }
+
+   public boolean isEmailFieldFilledIn(){
+        return !driver.findElement(EMAIL_FIELD).getAttribute("value").isBlank();
+   }
 }
 
 
