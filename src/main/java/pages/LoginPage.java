@@ -1,12 +1,13 @@
 package pages;
 
 import components.Header;
+import models.LoginFormData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginPage {
+public class LoginPage extends FormPage<LoginFormData>{
 
     private static final By CITIZEN_BUTTON = By.xpath("//button[@data-testid=\"cs-prefill-citizen\"]");
     private static final By CLERK_BUTTON = By.xpath("//*[@data-testid='cs-prefill-clerk']");
@@ -23,6 +24,7 @@ public class LoginPage {
     private final WebDriverWait wait;
 
     public LoginPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
         this.driver = driver;
         this.wait = wait;
         driver.get("http://localhost:5173/login");
@@ -99,6 +101,18 @@ public class LoginPage {
    public boolean isEmailFieldFilledIn(){
         return !driver.findElement(EMAIL_FIELD).getAttribute("value").isBlank();
    }
+
+    @Override
+    public void fillForm(LoginFormData formData) {
+        driver.findElement(EMAIL_FIELD).sendKeys(formData.email());
+        driver.findElement(PASSWORD_FIELD).sendKeys(formData.password());
+    }
+
+    @Override
+    public void submitForm() {
+        driver.findElement(LOGIN_BUTTON).click();
+    }
+
 }
 
 

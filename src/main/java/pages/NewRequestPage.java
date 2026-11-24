@@ -1,12 +1,13 @@
 package pages;
 
+import models.NewRequestForm;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import components.Header;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class NewRequestPage extends Header {
+public class NewRequestPage extends FormPage<NewRequestForm> {
 
     private static final By REQUEST_TITLE_FIELD = By.xpath("//input[@name='title']");
     private static final By DESCRIPTION_FIELD = By.xpath("//*[@data-testid='cs-new-request-description']//*[@aria-invalid='false']");
@@ -71,6 +72,11 @@ public class NewRequestPage extends Header {
 
     private void click(By locator) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).click();
+    }
+
+    @Override
+    public void fillForm(NewRequestForm data) {
+        fillInBasicInformation()
     }
 }
 
